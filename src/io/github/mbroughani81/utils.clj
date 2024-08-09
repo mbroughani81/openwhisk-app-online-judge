@@ -18,14 +18,18 @@
 ;;   `(-> (str *ns*)
 ;;        (clojure.string/replace #"-" "_")))
 
-(defmacro OpenWhisk-Action-Entry [ns]
-  `(gen-class
-     :name    ~ns
-     :methods [^:static ["main" [com.google.gson.JsonObject] com.google.gson.JsonObject]]
-     :prefix  "Main-"))
+(defmacro OpenWhisk-Action-Entry [ns main mapper]
+  `(do (gen-class
+         :name    ~ns
+         :methods [^:static ["main" [com.google.gson.JsonObject] com.google.gson.JsonObject]]
+         :prefix  "Main-")
+       (defn Main-main
+         [^JsonObject args]
+         (let [result (~main (~mapper args))]
+           (println "Hello, Users Are Here!")
+           result))))
 
 (comment
-
   (do
     (def y ^JsonPrimitive (JsonPrimitive. 2))
     (def x ^JsonObject (JsonObject.))
@@ -33,4 +37,8 @@
     (json-obj->map x)
     (json-obj->map "123")
     ;;
-    ))
+    )
+  (println
+    (macroexpand-1 '(OpenWhisk-Action-Entry "Ggg" (fn [] 123) (fn [] 456))))
+
+  )
