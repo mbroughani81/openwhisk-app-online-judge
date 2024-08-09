@@ -12,17 +12,17 @@
         json-obj (.getAsJsonObject (JsonParser/parseString str))]
     (-> json-obj)))
 
-(defmacro print-ns []
-  `(println (str *ns*)))
-(defmacro get-ns []
-  `(-> (str *ns*)
-       (clojure.string/replace #"-" "_")))
+;; (defmacro print-ns []
+;;   `(println (str *ns*)))
+;; (defmacro get-ns []
+;;   `(-> (str *ns*)
+;;        (clojure.string/replace #"-" "_")))
 
-(defmacro OpenWhisk-Action-Entry []
+(defmacro OpenWhisk-Action-Entry [ns]
   `(gen-class
-     :name (get-ns)
-     :methods [^:static [main [com.google.gson.JsonObject] com.google.gson.JsonObject]]
-     :prefix  Main-))
+     :name    ~ns
+     :methods [^:static ["main" [com.google.gson.JsonObject] com.google.gson.JsonObject]]
+     :prefix  "Main-"))
 
 (comment
 
@@ -33,9 +33,4 @@
     (json-obj->map x)
     (json-obj->map "123")
     ;;
-    )
-
-  (map->json-obj {:mohamamd "mb" :x {:1 1}})
-  (macroexpand-1 '(OpenWhisk-Action-Entry))
-  ;;
-  )
+    ))

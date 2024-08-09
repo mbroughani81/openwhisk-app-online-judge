@@ -4,10 +4,11 @@
   (:import
    [com.google.gson JsonObject JsonPrimitive]))
 
-(gen-class
-  :name    io.github.mbroughani81.openwhisk_app.Main
-  :methods [^:static [main [com.google.gson.JsonObject] com.google.gson.JsonObject]]
-  :prefix  Main-)
+;; (gen-class
+;;   :name    io.github.mbroughani81.openwhisk_app.Main
+;;   :methods [^:static [main [com.google.gson.JsonObject] com.google.gson.JsonObject]]
+;;   :prefix  Main-)
+(utils/OpenWhisk-Action-Entry "io.github.mbroughani81.openwhisk_app.Main")
 
 (defn Main-main
   [^JsonObject args]
