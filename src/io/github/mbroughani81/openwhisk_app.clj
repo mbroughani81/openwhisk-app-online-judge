@@ -1,5 +1,9 @@
 (ns io.github.mbroughani81.openwhisk-app
-  (:import [com.google.gson JsonObject JsonPrimitive]))
+  (:require
+   [io.github.mbroughani81.utils :as utils])
+  (:import
+   [com.google.gson JsonObject JsonPrimitive]))
+
 (gen-class
   :name    io.github.mbroughani81.openwhisk_app.Main
   :methods [^:static [main [com.google.gson.JsonObject] com.google.gson.JsonObject]]
@@ -17,6 +21,8 @@
   (class x)
 
   (x -main)
+
+  (utils/print-ns)
 
   (print x)
 
