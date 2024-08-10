@@ -6,8 +6,11 @@
   :dependencies [[org.clojure/clojure "1.11.1"]
                  [com.google.code.gson/gson "2.11.0"]
                  [org.clojure/java.jdbc "0.7.12"]
+                 [com.mchange/c3p0 "0.10.1"]
                  [mysql/mysql-connector-java "8.0.33"]
                  [cheshire "5.13.0"]
+                 [com.stuartsierra/component "1.1.0"]
+
                  ;;
                  ]
   :main ^:skip-aot io.github.mbroughani81.openwhisk-app.Main
