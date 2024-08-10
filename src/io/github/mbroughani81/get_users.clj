@@ -4,13 +4,21 @@
   (:import
    [com.google.gson JsonObject JsonPrimitive]))
 
-(utils/OpenWhisk-Action-Entry "io.github.mbroughani81.get_users.Main")
 
-(defn Main-main
-  [^JsonObject args]
-  (println "Hello, Users Are Here!")
-  args)
+(defn main [args]
+  (-> args))
+
+(utils/OpenWhisk-Action-Entry "io.github.mbroughani81.get_users.Main")
+;; (clojure.pprint/pprint (macroexpand-1
+;;                          '(utils/OpenWhisk-Main (fn [x] (-> x)))))
+;; (utils/OpenWhisk-Main (fn [x] (-> x)))
+
 
 (comment
+  (macroexpand-1
+    (utils/OpenWhisk-Action-Entry "io.github.mbroughani81.get_users.Main"))
+  (clojure.pprint/pprint
+    (macroexpand-1 '(utils/OpenWhisk-Main
+                      main)))
   ;;
   )

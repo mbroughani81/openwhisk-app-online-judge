@@ -18,16 +18,20 @@
 ;;   `(-> (str *ns*)
 ;;        (clojure.string/replace #"-" "_")))
 
-(defmacro OpenWhisk-Action-Entry [ns main mapper]
-  `(do (gen-class
-         :name    ~ns
-         :methods [^:static ["main" [com.google.gson.JsonObject] com.google.gson.JsonObject]]
-         :prefix  "Main-")
-       (defn Main-main
-         [^JsonObject args]
-         (let [result (~main (~mapper args))]
-           (println "Hello, Users Are Here!")
-           result))))
+(defmacro OpenWhisk-Action-Entry [ns]
+  `(gen-class
+     :name    ~ns
+     :methods [^:static ["main" [com.google.gson.JsonObject] com.google.gson.JsonObject]]
+     :prefix  "Main-"))
+
+(defmacro OpenWhisk-Main [main]
+  `(defn Main-main [^JsonObject args#]
+     (let [result (-> args
+                      io.github.mbroughani81.utils/json-obj->map
+                      ~main
+                      io.github.mbroughani81.utils/map->json-obj)]
+       (println "Hello, Users Are Here!")
+       result)))
 
 (comment
   (do
@@ -41,4 +45,10 @@
   (println
     (macroexpand-1 '(OpenWhisk-Action-Entry "Ggg" (fn [] 123) (fn [] 456))))
 
+
+  (clojure.pprint/pprint (macroexpand-1 '(OpenWhisk-Main (fn [x] (inc x)) )))
+
+  (OpenWhisk-Main (fn [x] (inc x)) )
+
+  ;;
   )
