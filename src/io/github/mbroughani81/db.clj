@@ -1,13 +1,9 @@
 (ns io.github.mbroughani81.db
   (:require [com.stuartsierra.component :as component]
             [clojure.java.jdbc :as jdbc])
-  (:import (com.mchange.v2.c3p0 ComboPooledDataSource)))
+  (:import (com.mchange.v2.c3p0 ComboPooledDataSource DataSources)))
 
-(defrecord Database []
-  component/Lifecycle
-  (start [component])
-
-  (stop [component]))
+;; ------------------------------------------------------------ ;;
 
 (def db-spec
   {:classname   "com.mysql.jdbc.Driver"
@@ -29,17 +25,40 @@
 
 (defn db-connection [] @pooled-db)
 
+;; ------------------------------------------------------------ ;;
+
+(defrecord Database [connection]
+  component/Lifecycle
+  (start [component]
+    (println "starting Database component...")
+    (let [pool (fn [spec]
+                 (let [cpds (doto (ComboPooledDataSource.)
+                              (.setDriverClass (:classname spec))
+                              (.setJdbcUrl (str "jdbc:" (:subprotocol spec) ":" (:subname spec)))
+                              (.setUser (:user spec))
+                              (.setPassword (:password spec)))]
+                   {:datasource cpds}))
+          conn (pool db-spec)]
+      (-> component
+          (assoc :connection conn))))
+
+  (stop [component]
+    (println "stopping Database component...")
+    (DataSources/destroy connection)
+    (-> component)
+    ))
+
 ;; (defn get-user [database username]
 ;;   (execute-query (:connection database)
-;;                  "SELECT * FROM users"
+;;                 "SELECT * FROM users"
 ;;                  username))
 
-(defn new-database [host port]
-  (map->Database {:host host :port port}))
+(defn new-database []
+  (map->Database {}))
 
 (comment
 
-  (db-connection)
+  (def x (db-connection))
 
   (jdbc/query (db-connection) "select * from User")
 
