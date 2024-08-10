@@ -25,13 +25,13 @@
      :prefix  "Main-"))
 
 (defmacro OpenWhisk-Main [main]
-  `(defn Main-main [^JsonObject args#]
-     (let [result (-> args
-                      io.github.mbroughani81.utils/json-obj->map
-                      ~main
-                      io.github.mbroughani81.utils/map->json-obj)]
+  `(defn ~'Main-main
+     [^JsonObject args#]
+     (let [result# (io.github.mbroughani81.utils/json-obj->map args#)
+           result# (~main result#)
+           result# (io.github.mbroughani81.utils/map->json-obj result#)]
        (println "Hello, Users Are Here!")
-       result)))
+       result#)))
 
 (comment
   (do

@@ -6,19 +6,12 @@
 
 
 (defn main [args]
-  (-> args))
+  (-> {:x "this is x"
+       :y "this is y"}))
 
 (utils/OpenWhisk-Action-Entry "io.github.mbroughani81.get_users.Main")
-;; (clojure.pprint/pprint (macroexpand-1
-;;                          '(utils/OpenWhisk-Main (fn [x] (-> x)))))
-;; (utils/OpenWhisk-Main (fn [x] (-> x)))
-
+(utils/OpenWhisk-Main main)
 
 (comment
-  (macroexpand-1
-    (utils/OpenWhisk-Action-Entry "io.github.mbroughani81.get_users.Main"))
-  (clojure.pprint/pprint
-    (macroexpand-1 '(utils/OpenWhisk-Main
-                      main)))
   ;;
   )
