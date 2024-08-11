@@ -8,7 +8,8 @@
 (def db-spec
   {:classname   "com.mysql.jdbc.Driver"
    :subprotocol "mysql"
-   :subname     "//localhost:3306/openwhisk_app_db"
+   :subname     "//10.10.0.1:3306/openwhisk_app_db"
+   ;; :subname     "//localhost:3306/openwhisk_app_db"
    :user        "root"
    :password    "13811381"})
 
