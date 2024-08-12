@@ -1,6 +1,7 @@
 (ns io.github.mbroughani81.db
   (:require [com.stuartsierra.component :as component]
-            [clojure.java.jdbc :as jdbc])
+            [clojure.java.jdbc :as jdbc]
+            [io.github.mbroughani81.db-proto :as db-proto])
   (:import (com.mchange.v2.c3p0 ComboPooledDataSource DataSources)))
 
 ;; ------------------------------------------------------------ ;;
@@ -29,7 +30,20 @@
 ;; ------------------------------------------------------------ ;;
 
 (defrecord Database [connection]
+  ;; ------------------------------------------------------------ ;;
+  db-proto/User-Repo
+  ;; ------------------------------------------------------------ ;;
+  (get-users [this]
+    (jdbc/query connection
+                "SELECT * FROM User"))
+  (add-user [this user password]
+    (jdbc/insert! connection
+                  :User
+                  {:username (-> user :username)
+                   :password password}))
+  ;; ------------------------------------------------------------ ;;
   component/Lifecycle
+  ;; ------------------------------------------------------------ ;;
   (start [component]
     (println "starting Database component...")
     (let [pool (fn [spec]
@@ -48,11 +62,6 @@
     (DataSources/destroy connection)
     (-> component)
     ))
-
-;; (defn get-user [database username]
-;;   (execute-query (:connection database)
-;;                 "SELECT * FROM users"
-;;                  username))
 
 (defn new-database []
   (map->Database {}))
