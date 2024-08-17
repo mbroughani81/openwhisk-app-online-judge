@@ -16,6 +16,7 @@
 (defn main [{:keys [username password]
              :as   args}]
   (swap! cnt inc)
+  (println "args => " args)
   (let [_             (when (not (deref system/system-started?))
                         (reset! system/system-started? true)
                         (swap! system/system
@@ -43,8 +44,8 @@
 (utils/OpenWhisk-Main main)
 
 (comment
-  (main {:username "m13"
-         :password "13811381"})
+  (main {:username "m1"
+         :password 13811381})
 
   (-> @system/system :db)
 

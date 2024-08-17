@@ -1,0 +1,1 @@
+echo '{"username": "m1", "password": "13811381"}' | wsk action invoke clj-login --param-file /dev/stdin --result
