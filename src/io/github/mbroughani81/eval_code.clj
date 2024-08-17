@@ -14,7 +14,7 @@
 
 ;; ------------------------------------------------------------ ;;
 
-(defn main [{:keys []
+(defn main [{:keys [code]
              :as   args}]
   (swap! cnt inc)
   (println "GOOZ")
@@ -24,10 +24,7 @@
            (fn [-system-]
              (component/start -system-))))
   (let [url   "http://10.10.0.1:3233/api/v1/namespaces/guest/actions/rest-action?overwrite=true"
-        -cnt- (deref cnt)
-        code  (str "function main(params) { return { message: "
-                   -cnt-
-                   " }; }")]
+        -cnt- (deref cnt)]
     (client/put url
                 {:body         (-> {:exec {:kind "nodejs:default"
                                            :code code}}
@@ -41,7 +38,7 @@
 (utils/OpenWhisk-Main main)
 
 (comment
-  (main {})
+  (main {:code "function main(params) { return { message: 1 + 1 }; }"})
 
   (system/reset-system)
 
