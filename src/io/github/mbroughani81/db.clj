@@ -1,6 +1,8 @@
 (ns io.github.mbroughani81.db
   (:require [com.stuartsierra.component :as component]
             [clojure.java.jdbc :as jdbc]
+            [buddy.hashers :as hashers]
+
             [io.github.mbroughani81.db-proto :as db-proto])
   (:import (com.mchange.v2.c3p0 ComboPooledDataSource DataSources)))
 
@@ -36,11 +38,16 @@
   (get-users [this]
     (jdbc/query connection
                 "SELECT * FROM User"))
+  (get-user [this username]
+    (jdbc/query connection
+                ["SELECT * FROM User WHERE username = ?" username]))
   (add-user [this user password]
-    (jdbc/insert! connection
-                  :User
-                  {:username (-> user :username)
-                   :password password}))
+    (let [hashed-password (hashers/derive password)
+          _               (println "UUU => " user)]
+      (jdbc/insert! connection
+                    :User
+                    {:username (-> user :username)
+                     :password hashed-password})))
   ;; ------------------------------------------------------------ ;;
   component/Lifecycle
   ;; ------------------------------------------------------------ ;;
@@ -59,15 +66,13 @@
 
   (stop [component]
     (println "stopping Database component...")
-    (DataSources/destroy connection)
-    (-> component)
-    ))
+    (DataSources/destroy (-> connection :datasource))
+    (-> component)))
 
 (defn new-database []
   (map->Database {}))
 
 (comment
-
   (def x (db-connection))
 
   (jdbc/query (db-connection) "select * from User")

@@ -18,7 +18,7 @@
   (swap! cnt inc)
   (-> cnt deref)
   (let [_     (when (not (deref system/system-started?))
-                (swap! system/system-started? (fn [x] true))
+                (reset! system/system-started? true)
                 (swap! system/system
                        (fn [-system-]
                          (component/start -system-))))
@@ -32,8 +32,10 @@
 (utils/OpenWhisk-Main main)
 
 (comment
-  (main {:username "mbroughani81"
+  (main {:username "m15"
          :password "13811381"})
+
+  (system/reset-system)
 
   ;;
   )

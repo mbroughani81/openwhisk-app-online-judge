@@ -16,7 +16,7 @@
 (defn main [args]
   (swap! cnt inc)
   (let [_     (when (not (deref system/system-started?))
-                (swap! system/system-started? (fn [x] true))
+                (reset! system/system-started? true)
                 (swap! system/system
                        (fn [-system-]
                          (component/start -system-))))
@@ -30,10 +30,6 @@
 
 (comment
   (main {})
-
-  (-> @system :db)
-
-
 
   (keys x)
 

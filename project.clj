@@ -14,6 +14,8 @@
                  [cheshire "5.13.0"]
                  ;; component
                  [com.stuartsierra/component "1.1.0"]
+                 ;; hashing
+                 [buddy/buddy-hashers "2.0.167"]
                  ;;
                  ]
   :main ^:skip-aot io.github.mbroughani81.openwhisk-app.Main
