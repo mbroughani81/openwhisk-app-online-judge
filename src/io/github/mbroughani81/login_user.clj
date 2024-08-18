@@ -24,6 +24,7 @@
                                  (component/start -system-))))
         -db-          (-> @system/system :db)
         -cnt-         (-> cnt deref)
+        _             (println (db-proto/get-users -db-))
         fetched-users (-> (db-proto/get-user -db- username))
         _             (println "fetched-users => " fetched-users)]
     (if (= (count fetched-users) 0)
@@ -44,21 +45,10 @@
 (utils/OpenWhisk-Main main)
 
 (comment
-  (main {:username "m1"
-         :password 13811381})
-
-  (-> @system/system :db)
-
-  (def dd (-> @system/system :db))
-
-  (com.mchange.v2.c3p0.DataSources/destroy
-    (-> dd :connection))
+  (main {:username "m2"
+         :password "13811381"})
 
   (system/reset-system)
-
-  (db-proto/get-user
-    dd
-    "jafar")
 
   ;;
   )

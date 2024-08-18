@@ -9,11 +9,10 @@
 ;; ------------------------------------------------------------ ;;
 
 (def db-spec
-  {:classname   "com.mysql.jdbc.Driver"
-   :subprotocol "mysql"
-   :subname     "//10.10.0.1:3306/openwhisk_app_db"
-   ;; :subname     "//localhost:3306/openwhisk_app_db"
-   :user        "root"
+  {:classname   "org.postgresql.Driver"
+   :subprotocol "postgresql"
+   :subname     "//10.10.0.1:5432/openwhisk_app_db"
+   :user        "postgres"
    :password    "13811381"})
 
 (defn pool
@@ -37,15 +36,15 @@
   ;; ------------------------------------------------------------ ;;
   (get-users [this]
     (jdbc/query connection
-                "SELECT * FROM User"))
+                "SELECT * FROM appusers"))
   (get-user [this username]
     (jdbc/query connection
-                ["SELECT * FROM User WHERE username = ?" username]))
+                ["SELECT * FROM appusers WHERE username = ?" username]))
   (add-user [this user password]
     (let [hashed-password (hashers/derive password)
           _               (println "UUU => " user)]
       (jdbc/insert! connection
-                    :User
+                    :appusers
                     {:username (-> user :username)
                      :password hashed-password})))
   ;; ------------------------------------------------------------ ;;

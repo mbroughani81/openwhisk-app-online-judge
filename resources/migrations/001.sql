@@ -1,4 +1,4 @@
-CREATE TABLE User(
+CREATE TABLE appusers(
        username VARCHAR(255) NOT NULL UNIQUE,
        password TEXT NOT NULL
 );

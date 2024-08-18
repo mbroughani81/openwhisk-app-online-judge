@@ -32,6 +32,7 @@
   (main {})
 
   (keys x)
+  (system/reset-system)
 
   (jdbc/query (-> db :connection) "select * from User")
 
