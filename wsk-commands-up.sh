@@ -7,6 +7,9 @@ wsk action update clj-login target/openwhisk-app-0.1.0-SNAPSHOT-standalone.jar -
 wsk action update clj-eval-code target/openwhisk-app-0.1.0-SNAPSHOT-standalone.jar --main io.github.mbroughani81.eval_code.Main --kind java:8 --memory 512
 
 
+wsk action update clj-create-problem target/openwhisk-app-0.1.0-SNAPSHOT-standalone.jar --main io.github.mbroughani81.create_problem.Main --kind java:8 --memory 512
+
+
 
 #wsk action invoke clj-get --result
 

@@ -4,7 +4,9 @@
             [buddy.hashers :as hashers]
 
             [io.github.mbroughani81.db-proto :as db-proto])
-  (:import (com.mchange.v2.c3p0 ComboPooledDataSource DataSources)))
+  (:import (com.mchange.v2.c3p0 ComboPooledDataSource DataSources)
+           (org.postgresql.util PGobject)
+           ))
 
 ;; ------------------------------------------------------------ ;;
 
@@ -30,6 +32,15 @@
 
 ;; ------------------------------------------------------------ ;;
 
+(extend-protocol jdbc/ISQLValue
+  clojure.lang.IPersistentMap
+  (sql-value [value]
+    (doto (PGobject.)
+      (.setType "json")
+      (.setValue (cheshire.core/generate-string value)))))
+
+;; ------------------------------------------------------------ ;;
+
 (defrecord Database [connection]
   ;; ------------------------------------------------------------ ;;
   db-proto/User-Repo
@@ -47,6 +58,13 @@
                     :appusers
                     {:username (-> user :username)
                      :password hashed-password})))
+  (add-problem [this problem]
+    (let [problem-id (-> problem :problem-id)
+          tests      (-> problem :tests)]
+      (jdbc/insert! connection
+                    :problem
+                    {:problem_id problem-id
+                     :tests      (jdbc/sql-value {:tests tests})})))
   ;; ------------------------------------------------------------ ;;
   component/Lifecycle
   ;; ------------------------------------------------------------ ;;

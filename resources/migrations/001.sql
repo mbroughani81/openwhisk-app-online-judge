@@ -3,6 +3,7 @@ CREATE TABLE appusers(
        password TEXT NOT NULL
 );
 
-CREATE TABLE Problem(
-       tests
+CREATE TABLE problem(
+       problem_id VARCHAR(255) NOT NULL UNIQUE,
+       tests JSONB
 );

@@ -21,6 +21,5 @@
                  [clj-http "3.13.0"]
                  ;;
                  ]
-  :main ^:skip-aot io.github.mbroughani81.openwhisk-app.Main
   :repl-options {:init-ns io.github.mbroughani81.openwhisk-app}
   :profiles {:uberjar {:aot :all}})

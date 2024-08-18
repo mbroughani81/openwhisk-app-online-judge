@@ -3,4 +3,5 @@
 (defprotocol User-Repo
   (get-users [this])
   (get-user [this username])
-  (add-user [this user password]))
+  (add-user [this user password])
+  (add-problem [this problem]))
