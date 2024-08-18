@@ -1,4 +1,3 @@
 echo '{"username": "m1", "password": "13811381"}' | wsk action invoke clj-login --param-file /dev/stdin --result
-echo '{"code": "function main(params) { return { message: `HELLO, ${params.name}` }; }", "param": {"name": "jafar javaad"}}' | wsk action invoke clj-eval-code --param-file /dev/stdin --result
 
 
