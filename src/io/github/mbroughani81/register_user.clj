@@ -32,7 +32,7 @@
 (utils/OpenWhisk-Main main)
 
 (comment
-  (main {:username "m2"
+  (main {:username "m3"
          :password "13811381"})
 
   (system/reset-system)
