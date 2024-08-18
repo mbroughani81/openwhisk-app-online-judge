@@ -1,1 +1,5 @@
-function main(params) { return { message: `HELLO, ${params.name}` }; }
+function main(params) {
+    return {
+        message: `HELLO, ${params.name}`
+    };
+}
