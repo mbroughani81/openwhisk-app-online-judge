@@ -3,7 +3,8 @@
             [clojure.java.jdbc :as jdbc]
             [buddy.hashers :as hashers]
 
-            [io.github.mbroughani81.db-proto :as db-proto])
+            [io.github.mbroughani81.db-proto :as db-proto]
+            [io.github.mbroughani81.data.problem :as problem])
   (:import (com.mchange.v2.c3p0 ComboPooledDataSource DataSources)
            (org.postgresql.util PGobject)
            ))
@@ -59,8 +60,8 @@
                     {:username (-> user :username)
                      :password hashed-password})))
   (add-problem [this problem]
-    (let [problem-id (-> problem :problem-id)
-          tests      (-> problem :tests)]
+    (let [problem-id (-> problem problem/<-problem-id)
+          tests      (-> problem problem/<-tests)]
       (jdbc/insert! connection
                     :problem
                     {:problem_id problem-id

@@ -33,7 +33,7 @@
 
 (comment
 
-  (main {:problem-id "gcx3"
+  (main {:problem-id "gcx6"
          :tests      [{:in "1 2" :out "3"}
                       {:in "2 2" :out "4"}
                       {:in "20 20" :out "40"}]})

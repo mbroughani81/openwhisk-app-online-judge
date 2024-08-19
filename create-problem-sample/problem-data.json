@@ -1,5 +1,5 @@
 {
-    "problem-id": "prob1",
+    "problem-id": "prob2",
     "tests": [{
             "in": "1 2",
             "out": "3"

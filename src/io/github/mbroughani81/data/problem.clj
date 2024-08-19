@@ -1,7 +1,14 @@
 (ns io.github.mbroughani81.data.problem
   (:require [clojure.spec.alpha :as spec]))
 
-(defrecord Problem [problem-id tests])
+(defprotocol Problem-Access
+  (<-problem-id [this])
+  (<-tests [this]))
+
+(defrecord Problem [problem-id tests]
+  Problem-Access
+  (<-problem-id [this] (-> problem-id))
+  (<-tests [this] (-> tests)))
 
 (spec/def ::in string?)
 (spec/def ::out string?)
