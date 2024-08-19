@@ -1,0 +1,12 @@
+{
+    "problem-id": "prob1",
+    "code": "
+    function main(params) {
+        return {
+            message: `HELLO, ${params.name
+            }`
+        };
+    }
+    ",
+    "language ": ""
+}

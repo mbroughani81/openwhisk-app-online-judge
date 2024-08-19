@@ -10,8 +10,9 @@
 
 ;; ------------------------------------------------------------ ;;
 
-(defn main [{:keys [code param]
+(defn main [{:keys [problem-id code language]
              :as   args}]
+  (println "args for submit => " args)
   (when (not (deref system/system-started?))
     (reset! system/system-started? true)
     (swap! system/system

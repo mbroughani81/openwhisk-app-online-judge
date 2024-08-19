@@ -12,6 +12,8 @@
 (def system-started? (atom false))
 
 (defn reset-system []
+  (println "!!!RESTARTING SYSTEM!!!")
+  (println "!!!SYSTEM STATUS : " @system-started? "!!!")
   (when @system-started?
     (component/stop-system @system)
     (reset! system-started? false))

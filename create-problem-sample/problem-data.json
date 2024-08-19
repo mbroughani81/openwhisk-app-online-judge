@@ -1,5 +1,7 @@
 {
-    "problem-id": "prob2",
+    "problem-id": "prob1",
+    "t-limit-sec": 20,
+    "m-limit-mb": 10,
     "tests": [{
             "in": "1 2",
             "out": "3"

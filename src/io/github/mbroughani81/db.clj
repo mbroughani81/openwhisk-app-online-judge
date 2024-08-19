@@ -60,12 +60,16 @@
                     {:username (-> user :username)
                      :password hashed-password})))
   (add-problem [this problem]
-    (let [problem-id (-> problem problem/<-problem-id)
-          tests      (-> problem problem/<-tests)]
+    (let [problem-id  (-> problem problem/<-problem-id)
+          t-limit-sec (-> problem problem/<-t-limit-sec)
+          m-limit-mb  (-> problem problem/<-m-limit-mb)
+          tests       (-> problem problem/<-tests)]
       (jdbc/insert! connection
                     :problem
-                    {:problem_id problem-id
-                     :tests      (jdbc/sql-value {:tests tests})})))
+                    {:problem_id  problem-id
+                     :t_limit_sec t-limit-sec
+                     :m_limit_mb  m-limit-mb
+                     :tests       (jdbc/sql-value {:tests tests})})))
   ;; ------------------------------------------------------------ ;;
   component/Lifecycle
   ;; ------------------------------------------------------------ ;;
