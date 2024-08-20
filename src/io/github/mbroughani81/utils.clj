@@ -1,5 +1,6 @@
 (ns io.github.mbroughani81.utils
-  (:require [cheshire.core :as cheshire])
+  (:require [cheshire.core :as cheshire]
+            [clojure.spec.alpha :as spec])
   (:import [com.google.gson JsonObject JsonPrimitive JsonParser]))
 
 (defn json-obj->map [^JsonObject json-obj]
@@ -32,6 +33,13 @@
            result# (io.github.mbroughani81.utils/map->json-obj result#)]
        (println "Hello, Users Are Here!")
        result#)))
+
+(defn validate [spec x]
+  (if (spec/valid? spec x)
+    (-> true)
+    (do
+      (spec/explain spec x)
+      (-> false))))
 
 (comment
   (do

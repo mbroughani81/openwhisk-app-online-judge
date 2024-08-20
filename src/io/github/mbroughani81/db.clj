@@ -4,7 +4,8 @@
             [buddy.hashers :as hashers]
 
             [io.github.mbroughani81.db-proto :as db-proto]
-            [io.github.mbroughani81.data.problem :as problem])
+            [io.github.mbroughani81.data.problem :as problem]
+            [io.github.mbroughani81.data.submit :as submit])
   (:import (com.mchange.v2.c3p0 ComboPooledDataSource DataSources)
            (org.postgresql.util PGobject)
            ))
@@ -40,6 +41,15 @@
       (.setType "json")
       (.setValue (cheshire.core/generate-string value)))))
 
+(extend-protocol jdbc/IResultSetReadColumn
+  PGobject
+  (result-set-read-column [pgobj metadata idx]
+    (let [type  (.getType pgobj)
+          value (.getValue pgobj)]
+      (case type
+        "jsonb" (cheshire.core/parse-string value keyword)
+        :else   value))))
+
 ;; ------------------------------------------------------------ ;;
 
 (defrecord Database [connection]
@@ -70,6 +80,36 @@
                      :t_limit_sec t-limit-sec
                      :m_limit_mb  m-limit-mb
                      :tests       (jdbc/sql-value {:tests tests})})))
+  (get-problem [this problem-id]
+    (let [problems (jdbc/query connection
+                               ["SELECT * FROM problem where problem_id = ?" problem-id])
+          problem  (first problems)
+          problem  (if (nil? problem)
+                     (-> problem)
+                     (problem/make-problem (-> problem :problem_id)
+                                           (-> problem :t_limit_sec)
+                                           (-> problem :m_limit_mb)
+                                           (-> problem :tests :tests)))]
+      (-> problem)))
+  (add-submit [this submit]
+    (let [problem-id (-> submit
+                         submit/<-problem
+                         problem/<-problem-id)
+          code       (-> submit
+                         submit/<-code)
+          lang       (-> submit
+                         submit/<-language)
+          status     (-> submit
+                         submit/<-status)
+          score      (-> submit
+                         submit/<-score)]
+      (jdbc/insert! connection
+                    :submit
+                    {:problem_id problem-id
+                     :code       code
+                     :lang       lang
+                     :status     status
+                     :score      score})))
   ;; ------------------------------------------------------------ ;;
   component/Lifecycle
   ;; ------------------------------------------------------------ ;;
@@ -95,9 +135,12 @@
   (map->Database {}))
 
 (comment
-  (def x (db-connection))
+  (io.github.mbroughani81.system/reset-system)
+  (io.github.mbroughani81.system/start-system)
 
-  (jdbc/query (db-connection) "select * from User")
+  (let [-db-   (-> @io.github.mbroughani81.system/system :db)
+        result (db-proto/get-problem -db- "prob1")]
+    )
 
   ;;
   )

@@ -18,3 +18,10 @@
     (component/stop-system @system)
     (reset! system-started? false))
   (reset! system (init-system)))
+
+(defn start-system []
+  (when (not (deref system-started?))
+    (reset! system-started? true)
+    (swap! system
+           (fn [-system-]
+             (component/start -system-)))))

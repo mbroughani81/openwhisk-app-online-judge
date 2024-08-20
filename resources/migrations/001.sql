@@ -13,8 +13,8 @@ CREATE TABLE problem(
 CREATE TABLE submit(
        submit_id SERIAL,
        problem_id VARCHAR(255),
-       code TEXT,
-       lang VARCHAR(31),
+       code TEXT NOT NULL,
+       lang VARCHAR(31) NOT NULL,
        status VARCHAR(255) NOT NULL,
        score INT NOT NULL,
        CONSTRAINT fk_problem

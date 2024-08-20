@@ -4,4 +4,6 @@
   (get-users [this])
   (get-user [this username])
   (add-user [this user password])
-  (add-problem [this problem]))
+  (add-problem [this problem])
+  (get-problem [this problem-id])
+  (add-submit [this submit]))

@@ -1,5 +1,6 @@
 (ns io.github.mbroughani81.data.problem
-  (:require [clojure.spec.alpha :as spec]))
+  (:require [clojure.spec.alpha :as spec]
+            [io.github.mbroughani81.utils :as utils]))
 
 (defprotocol Problem-Access
   (<-problem-id [this])
@@ -20,7 +21,7 @@
 (spec/def ::tests (spec/coll-of ::test))
 
 (defn make-problem [problem-id t-limit-sec m-limit-mb tests]
-  {:pre [(spec/valid? ::tests tests)]}
+  {:pre [(utils/validate ::tests tests)]}
   (map->Problem {:problem-id  problem-id
                  :t-limit-sec t-limit-sec
                  :m-limit-mb  m-limit-mb
