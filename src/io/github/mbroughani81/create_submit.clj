@@ -53,5 +53,9 @@
          ;; :code       "function main(params) {return {message: `HELLO, ${params.name}`};}"
          :language   "js"})
 
+  (main {:problem-id "prob1"
+         :code       "function main(params) { const numbers = params.input.split(' ').map(Number); const result = numbers[0] * numbers[1]; return { output: result.toString() }; }"
+         :language   "js"})
+
   ;;
   )
