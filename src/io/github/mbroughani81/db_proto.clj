@@ -7,4 +7,5 @@
   (add-problem [this problem])
   (get-problem [this problem-id])
   (add-submit [this submit])
-  (get-submit [this submit-id]))
+  (get-submit [this submit-id])
+  (update-submit [this submit-id status score]))

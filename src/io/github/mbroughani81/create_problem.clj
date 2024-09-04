@@ -34,8 +34,10 @@
   (main {:problem-id  "gcx31"
          :t-limit-sec 55
          :m-limit-mb  100
-         :tests       [{:in "1 2" :out "3"}
+         :tests       [{:in "1 2" :out "2"}
                        {:in "2 2" :out "4"}
+                       {:in "1 0" :out "0"}
+                       {:in "1 1000" :out "1000"}
                        {:in "20 20" :out "40"}]})
 
   (system/reset-system)

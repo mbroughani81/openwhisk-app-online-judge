@@ -121,6 +121,12 @@
                                          (-> submit-raw :code)
                                          (-> submit-raw :lang))]
       (-> submit)))
+  (update-submit [this submit-id status score]
+    (jdbc/update! connection
+                  :submit
+                  {:status status
+                   :score  score}
+                  ["submit_id = ?" submit-id]))
   ;; ------------------------------------------------------------ ;;
   component/Lifecycle
   ;; ------------------------------------------------------------ ;;
