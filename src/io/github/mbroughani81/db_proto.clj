@@ -6,4 +6,5 @@
   (add-user [this user password])
   (add-problem [this problem])
   (get-problem [this problem-id])
-  (add-submit [this submit]))
+  (add-submit [this submit])
+  (get-submit [this submit-id]))

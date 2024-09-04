@@ -102,14 +102,25 @@
           status     (-> submit
                          submit/<-status)
           score      (-> submit
-                         submit/<-score)]
-      (jdbc/insert! connection
-                    :submit
-                    {:problem_id problem-id
-                     :code       code
-                     :lang       lang
-                     :status     status
-                     :score      score})))
+                         submit/<-score)
+          db-result  (jdbc/insert! connection
+                                   :submit
+                                   {:problem_id problem-id
+                                    :code       code
+                                    :lang       lang
+                                    :status     status
+                                    :score      score})]
+      (-> db-result)))
+  (get-submit [this submit-id]
+    (let [submits    (jdbc/query connection
+                                 ["SELECT * FROM submit where submit_id = ?" submit-id])
+          submit-raw (first submits)
+          problem-id (-> submit-raw :problem_id)
+          problem    (db-proto/get-problem this problem-id)
+          submit     (submit/make-submit problem
+                                         (-> submit-raw :code)
+                                         (-> submit-raw :lang))]
+      (-> submit)))
   ;; ------------------------------------------------------------ ;;
   component/Lifecycle
   ;; ------------------------------------------------------------ ;;

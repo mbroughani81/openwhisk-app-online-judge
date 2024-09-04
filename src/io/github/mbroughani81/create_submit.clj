@@ -11,6 +11,8 @@
 
 ;; ------------------------------------------------------------ ;;
 
+
+
 (defn main [{:keys [problem-id code language]
              :as   args}]
   (when (not (deref system/system-started?))
@@ -18,12 +20,21 @@
     (swap! system/system
            (fn [-system-]
              (component/start -system-))))
-  (let [-db-    (-> @system/system :db)
-        problem (db-proto/get-problem -db- problem-id)
-        submit  (submit/make-submit problem code language)
-        _       (db-proto/add-submit -db- submit)]
-    ;; creating submit in db
-    ;; evaluating the code with test
+  (let [-db-           (-> @system/system :db)
+        ;; creating submit in db
+        problem        (db-proto/get-problem -db- problem-id)
+        _              (println "problem => " problem)
+        problem-found? (some? problem)
+        submit         (when problem-found?
+                         (submit/make-submit problem code language))
+        db-result      (when problem-found?
+                         (db-proto/add-submit -db- submit))
+        submit-id      (-> db-result first :submit_id)
+        _              (println "gooz => " db-result submit-id)
+        ;; evaluating the code with test
+        ;; _              (when problem-found?
+        ;;                  ())
+        ]
     ;; scroting and updating the db
     (-> {:result "ok"})
     ))
@@ -35,7 +46,11 @@
   (system/reset-system)
 
   (main {:problem-id "prob1"
-         :code       "function main(params) {return {message: `HELLO, ${params.name}`};}"
+         :code       "function main(params) {return {output: `HELLO, ${params.input}`};}"
+         :language   "js"})
+
+  (main {:problem-id "prob1"
+         ;; :code       "function main(params) {return {message: `HELLO, ${params.name}`};}"
          :language   "js"})
 
   ;;
