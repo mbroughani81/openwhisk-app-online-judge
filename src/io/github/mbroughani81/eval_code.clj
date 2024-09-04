@@ -60,16 +60,10 @@
 (utils/OpenWhisk-Main main)
 
 (comment
-  (main {:code  "function main(params) { return { greeting: `Hello, ${params.name}!` }; }"
-         :param {:name "jafar sexi mibashad"}})
-
   (main {:code       "function main(params) { return { greeting: `Hello, ${params.name}!` }; }"
          :input-list [{:name "jafar sexi 1"}
                       {:name "jafar sexi 2"}
                       {:name "jafar sexi 3"}
                       ]})
-
-  (system/reset-system)
-
-;;
+  ;;
   )

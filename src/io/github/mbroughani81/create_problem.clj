@@ -30,7 +30,6 @@
 (utils/OpenWhisk-Main main)
 
 (comment
-
   (main {:problem-id  "gcx31"
          :t-limit-sec 55
          :m-limit-mb  100
@@ -40,7 +39,5 @@
                        {:in "1 1000" :out "1000"}
                        {:in "20 20" :out "40"}]})
 
-  (system/reset-system)
-
-;;
+  ;;
   )

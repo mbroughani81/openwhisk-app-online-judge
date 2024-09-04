@@ -13,12 +13,6 @@
         json-obj (.getAsJsonObject (JsonParser/parseString str))]
     (-> json-obj)))
 
-;; (defmacro print-ns []
-;;   `(println (str *ns*)))
-;; (defmacro get-ns []
-;;   `(-> (str *ns*)
-;;        (clojure.string/replace #"-" "_")))
-
 (defmacro OpenWhisk-Action-Entry [ns]
   `(gen-class
      :name    ~ns
@@ -42,21 +36,6 @@
       (-> false))))
 
 (comment
-  (do
-    (def y ^JsonPrimitive (JsonPrimitive. 2))
-    (def x ^JsonObject (JsonObject.))
-    (.add x "x" y)
-    (json-obj->map x)
-    (json-obj->map "123")
-    ;;
-    )
-  (println
-    (macroexpand-1 '(OpenWhisk-Action-Entry "Ggg" (fn [] 123) (fn [] 456))))
-
-
-  (clojure.pprint/pprint (macroexpand-1 '(OpenWhisk-Main (fn [x] (inc x)) )))
-
-  (OpenWhisk-Main (fn [x] (inc x)) )
 
   ;;
   )

@@ -48,7 +48,5 @@
   (main {:username "m2"
          :password "13811381"})
 
-  (system/reset-system)
-
   ;;
   )

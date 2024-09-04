@@ -2,6 +2,7 @@
   (:require
    [com.stuartsierra.component :as component]
 
+   [io.github.mbroughani81.utils :as utils]
    [io.github.mbroughani81.system :as system]
    [io.github.mbroughani81.db-proto :as db-proto]
    [io.github.mbroughani81.data.submit :as submit]
@@ -64,9 +65,10 @@
         _                 (clojure.pprint/pprint ["output-list" output-list])
         ]))
 
-(comment
-  (system/reset-system)
+(utils/OpenWhisk-Action-Entry "io.github.mbroughani81.eval_submit.Main")
+(utils/OpenWhisk-Main main)
 
+(comment
   (main {:submit-id 36})
 
   ;;

@@ -152,12 +152,5 @@
   (map->Database {}))
 
 (comment
-  (io.github.mbroughani81.system/reset-system)
-  (io.github.mbroughani81.system/start-system)
-
-  (let [-db-   (-> @io.github.mbroughani81.system/system :db)
-        result (db-proto/get-problem -db- "prob1")]
-    )
-
   ;;
   )
