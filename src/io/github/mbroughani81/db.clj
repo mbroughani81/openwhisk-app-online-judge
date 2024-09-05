@@ -12,28 +12,6 @@
 
 ;; ------------------------------------------------------------ ;;
 
-(def db-spec
-  {:classname   "org.postgresql.Driver"
-   :subprotocol "postgresql"
-   :subname     "//10.10.0.1:5432/openwhisk_app_db"
-   :user        "postgres"
-   :password    "13811381"})
-
-(defn pool
-  [spec]
-  (let [cpds (doto (ComboPooledDataSource.)
-               (.setDriverClass (:classname spec))
-               (.setJdbcUrl (str "jdbc:" (:subprotocol spec) ":" (:subname spec)))
-               (.setUser (:user spec))
-               (.setPassword (:password spec)))]
-    {:datasource cpds}))
-
-(def pooled-db (delay (pool db-spec)))
-
-(defn db-connection [] @pooled-db)
-
-;; ------------------------------------------------------------ ;;
-
 (extend-protocol jdbc/ISQLValue
   clojure.lang.IPersistentMap
   (sql-value [value]
@@ -52,7 +30,7 @@
 
 ;; ------------------------------------------------------------ ;;
 
-(defrecord Database [connection]
+(defrecord Database [connection db-spec]
   ;; ------------------------------------------------------------ ;;
   db-proto/User-Repo
   ;; ------------------------------------------------------------ ;;
