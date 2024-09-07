@@ -56,9 +56,9 @@
 
 (comment
   (main {:code       "function main(params) { return { greeting: `Hello, ${params.name}!` }; }"
-         :input-list [{:name "jafar sexi 1"}
-                      {:name "jafar sexi 2"}
-                      {:name "jafar sexi 3"}
+         :input-list [{:name "jafar 1"}
+                      {:name "jafar 2"}
+                      {:name "jafar 3"}
                       ]})
 
   ;;
