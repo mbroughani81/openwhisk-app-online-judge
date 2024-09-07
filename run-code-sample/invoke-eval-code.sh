@@ -10,5 +10,5 @@ echo "INPUT => $INPUT"
 echo "================"
 
 # Create the command and invoke the action
-PAYLOAD=$(printf '{"code": "%s", "param": %s}' "$CODE" "$INPUT")
+PAYLOAD=$(printf '{"code": "%s", "input-list": %s}' "$CODE" "$INPUT")
 echo "$PAYLOAD" | wsk action invoke clj-eval-code --param-file /dev/stdin --result

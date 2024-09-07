@@ -60,7 +60,8 @@
         _                 (clojure.pprint/pprint ["test-input-list" test-input-list])
         _                 (clojure.pprint/pprint ["test-output-list" test-output-list])
         _                 (clojure.pprint/pprint ["output-list" output-list])
-        ]))
+        ]
+    (-> {:result "ok"})))
 
 (utils/OpenWhisk-Action-Entry "io.github.mbroughani81.eval_submit.Main")
 (utils/OpenWhisk-Main main)
