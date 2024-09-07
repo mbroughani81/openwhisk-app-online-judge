@@ -5,7 +5,6 @@
 
    [io.github.mbroughani81.system :as system]
    [io.github.mbroughani81.utils :as utils]
-   [io.github.mbroughani81.db-proto :as db-proto]
    [io.github.mbroughani81.data.user :as user]))
 
 ;; ------------------------------------------------------------ ;;
@@ -41,14 +40,10 @@
     (-> result)))
 
 ;; should run the code for each input in input-list. will create an list of output
-(defn main [{:keys [code input-list]
+(defn main [{:keys [config
+                    code input-list]
              :as   args}]
-  {:pre []}
-  (when (not (deref system/system-started?))
-    (reset! system/system-started? true)
-    (swap! system/system
-           (fn [-system-]
-             (component/start -system-))))
+  (system/start-system config)
   (let [output-list (reduce (fn [acc input]
                               (let [output (run-once code input)]
                                 (conj acc output)))
@@ -65,5 +60,6 @@
                       {:name "jafar sexi 2"}
                       {:name "jafar sexi 3"}
                       ]})
+
   ;;
   )

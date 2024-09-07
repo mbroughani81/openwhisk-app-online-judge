@@ -13,13 +13,10 @@
 
 
 
-(defn main [{:keys [problem-id code language]
+(defn main [{:keys [config
+                    problem-id code language]
              :as   args}]
-  (when (not (deref system/system-started?))
-    (reset! system/system-started? true)
-    (swap! system/system
-           (fn [-system-]
-             (component/start -system-))))
+  (system/start-system config)
   (let [-db-           (-> @system/system :db)
         ;; creating submit in db
         problem        (db-proto/get-problem -db- problem-id)
@@ -43,8 +40,14 @@
 (utils/OpenWhisk-Main main)
 
 (comment
-  (main {:problem-id "gcx31"
+  (main {:config     {:classname   "org.postgresql.Driver"
+                      :subprotocol "postgresql"
+                      :subname     "//10.10.0.1:5432/openwhisk_app_db"
+                      :user        "postgres"
+                      :password    "13811381"}
+         :problem-id "gcx41"
          :code       "function main(params) { const numbers = params.input.split(' ').map(Number); const result = numbers[0] * numbers[1]; return { output: result.toString() }; }"
          :language   "js"})
+
   ;;
   )

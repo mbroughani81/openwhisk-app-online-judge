@@ -21,13 +21,10 @@
     (-> (/ correct-count problem-cnt)
         double)))
 
-(defn main [{:keys [submit-id]
+(defn main [{:keys [config
+                    submit-id]
              :as   args}]
-  (when (not (deref system/system-started?))
-    (reset! system/system-started? true)
-    (swap! system/system
-           (fn [-system-]
-             (component/start -system-))))
+  (system/start-system config)
   (let [-db-              (-> @system/system :db)
         submit            (db-proto/get-submit -db- submit-id)
         _                 (println "submitttt => " submit)
@@ -69,7 +66,12 @@
 (utils/OpenWhisk-Main main)
 
 (comment
-  (main {:submit-id 36})
+  (main {:config    {:classname   "org.postgresql.Driver"
+                     :subprotocol "postgresql"
+                     :subname     "//10.10.0.1:5432/openwhisk_app_db"
+                     :user        "postgres"
+                     :password    "13811381"}
+         :submit-id 44})
 
   ;;
   )
