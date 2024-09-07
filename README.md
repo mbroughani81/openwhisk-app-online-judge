@@ -12,7 +12,6 @@ To experiment with this project locally, you can set up OpenWhisk on your system
 - **Clojure and Leiningen**: Used for building the project.
 - **OpenWhisk CLI (wsk)**: For creating and managing actions in OpenWhisk.
 
----
 
 ## Usage
 
@@ -39,8 +38,6 @@ To create the actions in OpenWhisk, execute the provided shell script:
 Actions require specific configurations, which are passed as parameters when creating the actions. An example configuration can be found in the \`resources/configs/db.json\` file.
 
 **TODO**: Extend the configuration to include additional parameters as needed.
-
----
 
 ## Defined Actions
 
@@ -81,8 +78,6 @@ Example of invoking this action can be found in the script:
 \`run-code-sample/invoke-eval-code.sh\`
 
 **TODO**: Currently, only **JavaScript** code is supported. Add support for additional programming languages as needed.
-
----
 
 ## License
 
