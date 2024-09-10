@@ -25,7 +25,6 @@
      (let [result# (io.github.mbroughani81.utils/json-obj->map args#)
            result# (~main result#)
            result# (io.github.mbroughani81.utils/map->json-obj result#)]
-       (println "Hello, Users Are Here!")
        result#)))
 
 (defn validate [spec x]

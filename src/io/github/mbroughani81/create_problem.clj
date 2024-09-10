@@ -2,6 +2,7 @@
   (:require
    [com.stuartsierra.component :as component]
    [clj-http.client :as client]
+   [taoensso.timbre :as timbre]
 
    [io.github.mbroughani81.system :as system]
    [io.github.mbroughani81.utils :as utils]
@@ -19,7 +20,7 @@
                                       t-limit-sec
                                       m-limit-mb
                                       tests)
-        _       (println "problem => " problem)
+        _       (timbre/info "problem => " problem)
         _       (db-proto/add-problem -db- problem)])
   (-> {:result "ok"}))
 
@@ -40,7 +41,7 @@
                        :subname     "//10.10.0.1:5432/openwhisk_app_db"
                        :user        "postgres"
                        :password    "13811381"}
-         :problem-id  "gcx41"
+         :problem-id  "gcx44"
          :t-limit-sec 55
          :m-limit-mb  100
          :tests       [{:in "1 2" :out "2"}

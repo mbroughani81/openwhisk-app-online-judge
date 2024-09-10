@@ -1,6 +1,7 @@
 (ns io.github.mbroughani81.eval-submit
   (:require
    [com.stuartsierra.component :as component]
+   [taoensso.timbre :as timbre]
 
    [io.github.mbroughani81.utils :as utils]
    [io.github.mbroughani81.system :as system]
@@ -11,7 +12,7 @@
 (defn cal-score [result-list test-list]
   (let [problem-cnt   (count test-list)
         pairs         (partition 2 (interleave result-list test-list))
-        _             (println "pairs => " pairs)
+        _             (timbre/info "pairs => " pairs)
         correct-count (reduce (fn [acc [x y]]
                                 (if (= x y)
                                   (inc acc)
@@ -27,7 +28,6 @@
   (system/start-system config)
   (let [-db-              (-> @system/system :db)
         submit            (db-proto/get-submit -db- submit-id)
-        _                 (println "submitttt => " submit)
         test-input-list   (->> submit
                                submit/<-problem
                                :tests
@@ -51,16 +51,15 @@
                               :output-list)
         score             (cal-score test-output-list output-list)
         score             (* score 100)
-        _                 (println "score => " score)
+        _                 (timbre/info "calculated score => " score)
         ;; updating submit in db
         _                 (db-proto/update-submit -db-
                                                   submit-id
                                                   "done"
                                                   score)
-        _                 (clojure.pprint/pprint ["test-input-list" test-input-list])
-        _                 (clojure.pprint/pprint ["test-output-list" test-output-list])
-        _                 (clojure.pprint/pprint ["output-list" output-list])
-        ]
+        _                 (timbre/info ["test-input-list" test-input-list])
+        _                 (timbre/info ["test-output-list" test-output-list])
+        _                 (timbre/info ["output-list" output-list])]
     (-> {:result "ok"})))
 
 (utils/OpenWhisk-Action-Entry "io.github.mbroughani81.eval_submit.Main")
@@ -72,7 +71,7 @@
                      :subname     "//10.10.0.1:5432/openwhisk_app_db"
                      :user        "postgres"
                      :password    "13811381"}
-         :submit-id 44})
+         :submit-id 58})
 
   ;;
   )

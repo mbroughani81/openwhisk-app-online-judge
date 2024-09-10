@@ -16,7 +16,6 @@
 (defn main [{:keys [username password]
              :as   args}]
   (swap! cnt inc)
-  (println "args => " args)
   (let [_             (when (not (deref system/system-started?))
                         (reset! system/system-started? true)
                         (swap! system/system
@@ -24,15 +23,11 @@
                                  (component/start -system-))))
         -db-          (-> @system/system :db)
         -cnt-         (-> cnt deref)
-        _             (println (db-proto/get-users -db-))
-        fetched-users (-> (db-proto/get-user -db- username))
-        _             (println "fetched-users => " fetched-users)]
+        fetched-users (-> (db-proto/get-user -db- username))]
     (if (= (count fetched-users) 0)
       (-> {:result "username not found"
            :cnt    -cnt-})
       (let [db-user     (first fetched-users)
-            _           (println "h1 => " password)
-            _           (println "h2 => " (-> db-user :password))
             is-pass-ok? (-> (hashers/verify password (-> db-user :password))
                             :valid)]
         (if (not is-pass-ok?)

@@ -1,6 +1,7 @@
 (ns io.github.mbroughani81.system
   (:require
    [com.stuartsierra.component :as component]
+   [taoensso.timbre :as timbre]
 
    [io.github.mbroughani81.db :as db]))
 
@@ -10,7 +11,7 @@
 (defn gen-system-map [config]
   (let [system     (component/system-map
                      :db (db/new-database))
-        _          (println "raw-config => " config)
+        _          (timbre/info "raw-config => " config)
         db-config  {:db {:db-spec {:classname   (-> config :classname)
                                    :subprotocol (-> config :subprotocol)
                                    :subname     (-> config :subname)
@@ -22,8 +23,8 @@
     (-> new-system)))
 
 (defn init-system [system-map]
-  (println "!!!RESTARTING SYSTEM!!!")
-  (println "!!!SYSTEM STATUS : " @system-started? "!!!")
+  (timbre/info "!!!RESTARTING SYSTEM!!!")
+  (timbre/info "!!!SYSTEM STATUS : " @system-started? "!!!")
   (when @system-started?
     (component/stop-system @system)
     (reset! system-started? false))
@@ -49,7 +50,6 @@
   (def p "resources/configs/create-problem-dev.edn")
   (def x (component/system-map
            :db (db/new-database)))
-  (def y (aero/read-config p))
   x
   (keys x)
   (-> x :db)

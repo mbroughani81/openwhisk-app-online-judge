@@ -2,6 +2,7 @@
   (:require
    [com.stuartsierra.component :as component]
    [clj-http.client :as client]
+   [taoensso.timbre :as timbre]
 
    [io.github.mbroughani81.system :as system]
    [io.github.mbroughani81.data.submit :as submit]
@@ -18,23 +19,17 @@
              :as   args}]
   (system/start-system config)
   (let [-db-           (-> @system/system :db)
-        ;; creating submit in db
         problem        (db-proto/get-problem -db- problem-id)
-        _              (println "problem => " problem)
+        _              (timbre/info "problem found => " problem)
         problem-found? (some? problem)
         submit         (when problem-found?
                          (submit/make-submit problem code language))
         db-result      (when problem-found?
                          (db-proto/add-submit -db- submit))
         submit-id      (-> db-result first :submit_id)
-        _              (println "gooz => " db-result submit-id)
-        ;; evaluating the code with test
-        ;; _              (when problem-found?
-        ;;                  ())
         ]
-    ;; scroting and updating the db
-    (-> {:result "ok"})
-    ))
+    (-> {:result    "ok"
+         :submit-id submit-id})))
 
 (utils/OpenWhisk-Action-Entry "io.github.mbroughani81.create_submit.Main")
 (utils/OpenWhisk-Main main)

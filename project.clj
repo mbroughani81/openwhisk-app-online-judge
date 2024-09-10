@@ -19,8 +19,8 @@
                  [buddy/buddy-hashers "2.0.167"]
                  ;; http
                  [clj-http "3.13.0"]
-                 ;; config
-                 [aero "1.1.6"]
+                 ;; logging
+                 [com.taoensso/timbre "6.5.0"]
                  ;;
                  ]
   :repl-options {:init-ns io.github.mbroughani81.openwhisk-app}

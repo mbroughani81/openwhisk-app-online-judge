@@ -2,6 +2,7 @@
   (:require [com.stuartsierra.component :as component]
             [clojure.java.jdbc :as jdbc]
             [buddy.hashers :as hashers]
+            [taoensso.timbre :as timbre]
 
             [io.github.mbroughani81.db-proto :as db-proto]
             [io.github.mbroughani81.data.problem :as problem]
@@ -41,8 +42,7 @@
     (jdbc/query connection
                 ["SELECT * FROM appusers WHERE username = ?" username]))
   (add-user [this user password]
-    (let [hashed-password (hashers/derive password)
-          _               (println "UUU => " user)]
+    (let [hashed-password (hashers/derive password)]
       (jdbc/insert! connection
                     :appusers
                     {:username (-> user :username)
@@ -109,7 +109,7 @@
   component/Lifecycle
   ;; ------------------------------------------------------------ ;;
   (start [component]
-    (println "starting Database component...")
+    (timbre/info "starting Database component...")
     (let [pool (fn [spec]
                  (let [cpds (doto (ComboPooledDataSource.)
                               (.setDriverClass (:classname spec))
@@ -122,7 +122,7 @@
           (assoc :connection conn))))
 
   (stop [component]
-    (println "stopping Database component...")
+    (timbre/info "stopping Database component...")
     (DataSources/destroy (-> connection :datasource))
     (-> component)))
 
