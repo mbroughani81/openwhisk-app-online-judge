@@ -38,10 +38,10 @@
                        {:in "20 20" :out "40"}]})
   (main {:config      {:classname   "org.postgresql.Driver"
                        :subprotocol "postgresql"
-                       :subname     "//10.10.0.1:5432/openwhisk_app_db"
+                       :subname     "//172.17.0.1:5432/openwhisk_app_db"
                        :user        "postgres"
                        :password    "13811381"}
-         :problem-id  "gcx44"
+         :problem-id  "prob1"
          :t-limit-sec 55
          :m-limit-mb  100
          :tests       [{:in "1 2" :out "2"}
