@@ -33,11 +33,26 @@
 
 ;; (utils/OpenWhisk-Action-Entry "io.github.mbroughani81.create_submit.Main")
 ;; (utils/OpenWhisk-Main main)
-;; (macroexpand-1 '(utils/SAM-Action-Entry "io.github.mbroughani81.create_submit.HandleRequest"))
-(utils/SAM-Action-Entry "io.github.mbroughani81.create_submit.HandleRequest")
+;; (utils/SAM-Action-Entry "io.github.mbroughani81.create_submit.Handler")
+;; (utils/SAM-Main main)
+(gen-class
+  :name    "io.github.mbroughani81.create_submit.RequestHandler"
+  :prefix  "RequestHandler-"
+  :implements [com.amazonaws.services.lambda.runtime.RequestHandler]
+  )
+(defn ^java.lang.Integer RequestHandler-handleRequest
+  [^java.util.Map args
+   ^com.amazonaws.services.lambda.runtime.Context context]
+  (let [
+        ;; result# (into {} args#)
+        ;; result# (~main result#)
+        ;; result# (java.util.HashMap. {:message "gooz"})
+        result (int 1)
+        ]
+    result))
 
-;; (macroexpand-1 '(utils/SAM-Main main))
-(utils/SAM-Main (fn [x]))
+
+
 
 (comment
   (main {:config     {:classname   "org.postgresql.Driver"
@@ -49,5 +64,9 @@
          :code       "function main(params) { const numbers = params.input.split(' ').map(Number); const result = numbers[0] * numbers[1]; return { output: result.toString() }; }"
          :language   "js"})
 
+
+  (macroexpand-1 '(utils/SAM-Action-Entry "io.github.mbroughani81.create_submit.Handler"))
+
+  ;; clojure.spec.alpha
   ;;
   )

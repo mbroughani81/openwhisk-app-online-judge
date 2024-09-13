@@ -22,11 +22,14 @@
 (defmacro SAM-Action-Entry [ns]
   `(gen-class
      :name    ~ns
+     :prefix  "RequestHandler-"
      :implements [com.amazonaws.services.lambda.runtime.RequestHandler]
-     :methods [["handleRequest" [java.util.Map
-                                 com.amazonaws.services.lambda.runtime.Context]
-                java.lang.Integer]]
-     :prefix  "HandleRequest-"))
+     ))
+
+;; :methods [["handleRequest" [java.util.Map
+;;                             com.amazonaws.services.lambda.runtime.Context]
+;;            java.lang.Integer]]
+
 
 (defmacro OpenWhisk-Main [main]
   `(defn ~'Main-main
@@ -37,7 +40,7 @@
        result#)))
 
 (defmacro SAM-Main [main]
-  `(defn ~'HandleRequest-handleRequest
+  `(defn ^java.lang.Integer ~'RequestHandler-handleRequest
      [^java.util.Map args#
       ^com.amazonaws.services.lambda.runtime.Context context#]
      (let [
