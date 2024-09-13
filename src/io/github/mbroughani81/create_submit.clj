@@ -40,7 +40,7 @@
   :prefix  "RequestHandler-"
   :implements [com.amazonaws.services.lambda.runtime.RequestHandler]
   )
-(defn ^java.lang.Integer RequestHandler-handleRequest
+(defn RequestHandler-handleRequest
   [^java.util.Map args
    ^com.amazonaws.services.lambda.runtime.Context context]
   (let [

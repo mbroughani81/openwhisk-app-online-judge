@@ -25,4 +25,4 @@
                  [com.amazonaws/aws-lambda-java-core "1.2.3"]
                  ]
   :repl-options {:init-ns io.github.mbroughani81.openwhisk-app}
-  :profiles {:uberjar {:aot :all}})
+  :profiles {:uberjar {:aot [io.github.mbroughani81.create-submit]}})

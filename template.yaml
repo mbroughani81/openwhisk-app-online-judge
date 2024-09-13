@@ -7,7 +7,7 @@ Resources:
     Type: AWS::Serverless::Function
     Properties:
       Handler: io.github.mbroughani81.test.SimpleRingHandler
-      Runtime: java11
+      Runtime: java8.al2
       MemorySize: 1024
       Timeout: 30
       CodeUri: ./target/openwhisk-app-0.1.0-SNAPSHOT-standalone.jar
@@ -21,7 +21,7 @@ Resources:
     Type: AWS::Serverless::Function
     Properties:
       Handler: io.github.mbroughani81.create_submit.RequestHandler
-      Runtime: java11
+      Runtime: java8.al2
       MemorySize: 1024
       Timeout: 30
       CodeUri: ./target/openwhisk-app-0.1.0-SNAPSHOT-standalone.jar
