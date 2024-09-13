@@ -31,8 +31,13 @@
     (-> {:result    "ok"
          :submit-id submit-id})))
 
-(utils/OpenWhisk-Action-Entry "io.github.mbroughani81.create_submit.Main")
-(utils/OpenWhisk-Main main)
+;; (utils/OpenWhisk-Action-Entry "io.github.mbroughani81.create_submit.Main")
+;; (utils/OpenWhisk-Main main)
+;; (macroexpand-1 '(utils/SAM-Action-Entry "io.github.mbroughani81.create_submit.HandleRequest"))
+(utils/SAM-Action-Entry "io.github.mbroughani81.create_submit.HandleRequest")
+
+;; (macroexpand-1 '(utils/SAM-Main main))
+(utils/SAM-Main (fn [x]))
 
 (comment
   (main {:config     {:classname   "org.postgresql.Driver"

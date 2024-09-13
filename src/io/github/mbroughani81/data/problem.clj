@@ -1,6 +1,7 @@
 (ns io.github.mbroughani81.data.problem
-  (:require [clojure.spec.alpha :as spec]
-            [io.github.mbroughani81.utils :as utils]))
+  (:require
+   [clojure.spec.alpha :as spec]
+   [io.github.mbroughani81.utils :as utils]))
 
 (defprotocol Problem-Access
   (<-problem-id [this])

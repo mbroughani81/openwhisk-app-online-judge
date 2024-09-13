@@ -1,0 +1,18 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+
+Resources:
+  ClojureLambdaFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: io.github.mbroughani81.create_submit.HandleRequest
+      Runtime: java11
+      MemorySize: 512
+      Timeout: 10
+      CodeUri: ./target/openwhisk-app-0.1.0-SNAPSHOT-standalone.jar
+      Events:
+        ApiGatewayEndpoint:
+          Type: Api
+          Properties:
+            Path: /hello
+            Method: get

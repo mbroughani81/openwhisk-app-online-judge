@@ -3,7 +3,7 @@
   :url "http://example.com/FIXME"
   :license {:name "EPL-2.0 OR GPL-2.0-or-later WITH Classpath-exception-2.0"
             :url  "https://www.eclipse.org/legal/epl-2.0/"}
-  :dependencies [[org.clojure/clojure "1.11.1"]
+  :dependencies [[org.clojure/clojure "1.10.3"]
                  ;; gson
                  [com.google.code.gson/gson "2.11.0"]
                  ;; db
@@ -22,6 +22,10 @@
                  ;; logging
                  [com.taoensso/timbre "6.5.0"]
                  ;;
+                 ;; https://mvnrepository.com/artifact/com.amazonaws/aws-lambda-java-core
+                 [com.amazonaws/aws-lambda-java-core "1.2.3"]
+                 ;; https://mvnrepository.com/artifact/com.amazonaws/aws-lambda-java-events
+                 [com.amazonaws/aws-lambda-java-events "3.13.0"]
                  ]
   :repl-options {:init-ns io.github.mbroughani81.openwhisk-app}
   :profiles {:uberjar {:aot :all}})
